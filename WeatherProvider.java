@@ -10,7 +10,7 @@ public class WeatherProvider {
 
     private static double generateTemperature() {
         Random rd = new Random(); 
-        double temperature = 300 * (rd.nextDouble() - 0.5);// Без округления и Вариант округления N 2
+        double temperature = 350 * (rd.nextDouble() - 0.5);// Без округления и Вариант округления N 2
         //double temperature = (double)((int) (300 * (rd.nextDouble() - 0.5) * 10)) / 10; // Вариант округления N 1
         double roundTemperature = new BigDecimal(temperature).setScale(1, RoundingMode.UP).doubleValue(); // Вариант округления N 2
         return roundTemperature; // Вариант округления N 2
@@ -31,18 +31,18 @@ public class WeatherProvider {
         if(temperatureForToday >= -150 && temperatureForToday <= 150) {
         	return temperatureForToday;
         }
-        double temperatureForTodayRounded;
-        if(temperatureForToday < -150) {
+        double temperatureForTodayRounded = 200;
+        if(temperatureForToday >= -152 && temperatureForToday < -150) {
         	temperatureForTodayRounded = -150;
         }
-        else {
-        	temperatureForTodayRounded = 150;
+        else if(temperatureForToday > 150 && temperatureForToday <= 152) {
+           	temperatureForTodayRounded = 150;
         }
         return temperatureForTodayRounded;
     }
 
     public static double[] getTemperaturesForecastFor10Days() {
-        for(int i = 0; i < temperaturesFor10Days.length; i++) {
+    	for(int i = 0; i < temperaturesFor10Days.length; i++) {
         	if(temperaturesFor10Days [i] < -150 || temperaturesFor10Days [i] > 150){
         		break;
         	}
@@ -56,10 +56,11 @@ public class WeatherProvider {
         		temperaturesFor10DaysRounded[i] = temperaturesFor10Days[i];
         		continue;
         	}
-        	else if(temperaturesFor10Days [i] < -150) {
+        	temperaturesFor10DaysRounded[i] = 200;
+        	if(temperaturesFor10Days [i] >= -152 && temperaturesFor10Days [i] < -150) {
         		temperaturesFor10DaysRounded[i] = -150;
         	}
-        	else {
+        	else if(temperaturesFor10Days [i] > 150 && temperaturesFor10Days[i] <= 152) {
         		temperaturesFor10DaysRounded[i] = 150;
         	}
         }
